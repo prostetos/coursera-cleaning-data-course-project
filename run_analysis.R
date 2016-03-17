@@ -1,4 +1,5 @@
 library(data.table)
+library(plyr)
 library(dplyr)
 
 # downloading the data of the project
@@ -50,4 +51,10 @@ colnames(used_data) <- names_data
 
 grouped_data <- group_by(used_data, activity, subject)
 grouped_data <- grouped_data %>% summarise_each(funs(mean))
+
+
+write.table(grouped_data, grouped_data.txt, row.names = FALSE)  
+
+
+
 
