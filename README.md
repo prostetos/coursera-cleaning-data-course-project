@@ -1,3 +1,7 @@
+This repository contains all the files needed for the course project on getting and cleaning up data course of the Data Science Specialization on Coursera. 
+
+
+
 First, we donwload the zip.file using the if statement. 
 
 Then, we load the txt.files that we need in R, using the fread command
