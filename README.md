@@ -1,20 +1,22 @@
+## README
+
 This repository contains all the files needed for the course project on getting and cleaning up data course of the Data Science Specialization on Coursera. 
 
+### Simulation
 
+The steps that were followed for this simulation are listed below
 
-First, we donwload the zip.file using the if statement. 
+* downloaded the zip.file using the if statement.
 
-Then, we load the txt.files that we need in R, using the fread command
+* loaded the txt.files that we need in R, using the fread command
 
-We create a vector which contains the columns names from the features.txt file, including subject and activity.
+* created a vector which contains the columns names from the features.txt file, including subject and activity.
 
-Then, we concatanate (cbind) the subject, activity and x_test (and x_train) in a new dataset, replacing the integer values
-of activity with the actual activities, as we see from the activity_labels.txt file. 
+* concatanated (cbind) the subject, activity and x_test (and x_train) matrices in a new dataset, replacing the integer values of activity with the actual name activities, as we see from the activity_labels.txt file. 
 
-We create the complete tidy data set by concatanate the x_test and x_train matrices. 
+* created the complete tidy data set by concatanating the x_test and x_train matrices. 
 
-Afterwards, we extract only the the measurements on the mean and standard deviation for each measurement, using a regular 
-expression and then subsetting the complete tidy data set. 
+* extracted only the the measurements on the mean and standard deviation for each measurement, using a regular 
+expression and then subsetting the complete tidy dataset. 
 
-Finally, we group by activity and subject in a second tidy data set, using the group_by command of the dplyr package. 
-
+* grouped by activity and subject in a second tidy dataset, using the ddply command of the plyr package. 

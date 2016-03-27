@@ -1,11 +1,9 @@
 library(data.table)
 library(plyr)
-library(dplyr)
 
 # downloading the data of the project
 
-
-if(!dir.exists("C:\\Users\\Giannis\\Desktop\\UCI HAR Dataset")){
+if(!dir.exists("UCI HAR Dataset")){
     fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
     download.file(fileUrl,destfile="getdata.zip")
     unzip("getdata.zip")
@@ -41,20 +39,27 @@ final_data <- rbind(X_train, X_test)
 
 # Extracts only the measurements on the mean and standard deviation for each measurement/variable
 
-extract <- grep("mean|std",names_data, value = TRUE)
+extract_mean_std <- grepl("mean|std",names_data)
+extract_meanFreq <- grepl("meanFreq",names_data)
+extract <- extract_mean_std & !extract_meanFreq
+
 used_data <- subset(final_data, select =  extract)
 names_data <- c("subject", "activity", names(used_data))
 used_data <- cbind(final_data[[1]], final_data[[2]], used_data)
 colnames(used_data) <- names_data
 
-# data set with the average of each variable for each activity and each subject
+names(used_data) <- gsub('^t',"Time.",names(used_data))
+names(used_data) <- gsub('^f',"Frequency.",names(used_data))
+names(used_data) <- gsub('Mag',"Magnitude.",names(used_data))
+names(used_data) <- gsub('.std',".standard_deviation",names(used_data))
+names(used_data) <- gsub("BodyBody", "Body", names(used_data))
+names(used_data) <- gsub(".ody", "Body.", names(used_data))
+names(used_data) <- gsub('Gyro',"Gyroscope.",names(used_data))
+names(used_data) <- gsub('Acc',"Accelerometer.",names(used_data))
+names(used_data) <- gsub('Gravity',"Gravity.",names(used_data))
+names(used_data) <- gsub('Jerk',"Jerk.",names(used_data))
 
-grouped_data <- group_by(used_data, activity, subject)
-grouped_data <- grouped_data %>% summarise_each(funs(mean))
+# data set with the average of each variable by activity and subject
 
-
+grouped_data <- ddply(used_data,c('activity','subject'),numcolwise(mean))
 write.table(grouped_data, file = "grouped_data.txt", row.names = FALSE)  
-
-
-
-
